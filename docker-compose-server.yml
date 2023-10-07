@@ -1,0 +1,77 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    command: /bin/bash entrypoint.sh
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/kitchen_app/app
+      - migrations-api:/kitchen_app/app/api/migrations
+      - static:/kitchen_app/static
+      - media:/kitchen_app/media
+    depends_on:
+      - db
+      - memcached
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=${DJANGO_DB_NAME}
+      - POSTGRES_USER=${DJANGO_DB_USER}
+      - POSTGRES_PASSWORD=${DJANGO_DB_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  memcached:
+    image: memcached
+    ports:
+      - "11211:11211"
+
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - "5672:5672"
+    volumes:
+      - ./app:/kitchen_app/app
+      - static:/kitchen_app/static
+      - media:/kitchen_app/media
+
+  celery_worker:
+    build: .
+    command: /bin/bash run-celery.sh
+    depends_on:
+      - rabbitmq
+    volumes:
+      - ./app:/kitchen_app/app
+      - static:/kitchen_app/static
+      - media:/kitchen_app/media
+
+  celery_scheduler:
+    build: .
+    command: /bin/bash run-sheduler.sh
+    depends_on:
+      - rabbitmq
+    volumes:
+      - ./app:/kitchen_app/app
+      - static:/kitchen_app/static
+      - media:/kitchen_app/media
+
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./conf/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt
+      - /var/lib/letsencrypt:/var/lib/letsencrypt
+    depends_on:
+      - app
+
+volumes:
+  postgres-data:
+  migrations:
+  static:
+  media:
