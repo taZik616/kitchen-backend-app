@@ -15,7 +15,7 @@ pip install -r reqs.txt
 Для выпуска сертификата используется такая команда
 
 ```sh
-docker run -it --rm -p 80:80 --name certbot -v "/etc/letsencrypt:/etc/letsencrypt" -v "/var/lib/letsencrypt:/var/lib/letsencrypt" certbot/certbot certonly --standalone -d pixreceipt.ru --register-unsafely-without-email --agree-tos
+docker run -it --rm -p 80:80 --name certbot -v "/etc/letsencrypt:/etc/letsencrypt" -v "/var/lib/letsencrypt:/var/lib/letsencrypt" certbot/certbot certonly --standalone -d po-obedai.ru --register-unsafely-without-email --agree-tos
 ```
 
 ## Может быть полезно

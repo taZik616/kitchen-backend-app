@@ -8,15 +8,15 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /kitchen_app
 
+COPY ./app/reqs.txt ./app/
+RUN cd app && pip install -r reqs.txt
+
 COPY ./conf ./conf
 COPY ./deploy-to-server.sh .
 COPY ./entrypoint.sh .
 COPY ./run-celery.sh .
 COPY ./run-sheduler.sh .
 COPY ./.env .
-
-COPY ./app/reqs.txt ./app/
-RUN cd app && pip install -r reqs.txt
 
 COPY ./app ./app
 

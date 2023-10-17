@@ -16,7 +16,7 @@ tar cz --no-xattrs --no-mac-metadata \
   --exclude='.git' --exclude='.vscode' --exclude='migrations' \
   --exclude='static' --exclude='__pycache__' --exclude='media' . | \
 sshpass -p "$SSH_PASSWORD" ssh "$SSH_USER"@"$SSH_HOST" \
-  "tar xz -C $SSH_PROJECT_PATH"
+  "mkdir -p $SSH_PROJECT_PATH && tar xz -C $SSH_PROJECT_PATH"
 
 # Подключаемся к удаленному серверу и выполняем остальные команды в одном ssh-соединении
 sshpass -p "$SSH_PASSWORD" ssh "$SSH_USER"@"$SSH_HOST" "

@@ -10,5 +10,4 @@ echo """
 import settings.on_start_app
 """ | python manage.py shell
 
-uvicorn settings.fast_api:app --proxy-headers --host 0.0.0.0 --port 8000 --reload
-# python manage.py runserver 0.0.0.0:8000
+python manage.py runserver 0.0.0.0:8000

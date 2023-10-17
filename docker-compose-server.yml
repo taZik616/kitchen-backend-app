@@ -72,6 +72,6 @@ services:
 
 volumes:
   postgres-data:
-  migrations:
+  migrations-api:
   static:
   media:

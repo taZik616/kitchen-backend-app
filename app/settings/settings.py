@@ -1,8 +1,8 @@
+import warnings
 from os import path
 from pathlib import Path
 
 from environs import Env
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_DIR = BASE_DIR.parent
@@ -20,8 +20,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'rest_framework',
-    # 'rest_framework.authtoken',
+    'rest_framework',
+    'rest_framework.authtoken',
     'django.contrib.postgres',
     'api.apps.ApiConfig',
     'django_jsonform',
@@ -101,6 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+SMS_RU_API_KEY = env.str('SMS_RU_API_KEY')
 
 # Internationalization
 LANGUAGE_CODE = 'ru-ru'
@@ -118,11 +119,16 @@ STATIC_ROOT = path.join(PROJECT_DIR, 'static')
 MEDIA_ROOT = path.join(PROJECT_DIR, 'media')
 MEDIA_URL = '/media/'
 
-# AUTH_USER_MODEL = 'api.BaseUser'
+AUTH_USER_MODEL = 'api.BaseUser'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Если установлен floppyforms:
-# import warnings
 
-# warnings.filterwarnings('ignore', module='floppyforms',
-#     message='Unable to import floppyforms.gis')
+warnings.filterwarnings('ignore', module='floppyforms',
+                        message='Unable to import floppyforms.gis')
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+}
