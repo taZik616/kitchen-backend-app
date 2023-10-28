@@ -15,7 +15,7 @@ class CustomerAdmin(admin.ModelAdmin):
     list_display = [
         'id', 'user', 'name', 'isPhoneNumberVerified', 'city']
     fieldsets = (
-        (None, {'fields': ('user', 'city', 'isPhoneNumberVerified')}),
+        (None, {'fields': ('user', 'city', 'isPhoneNumberVerified', 'bonuses')}),
         ('Персональная информация', {
          "fields": ['name']}),
     )

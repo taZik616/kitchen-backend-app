@@ -2,15 +2,13 @@ from api.decorators import onlyCustomer
 from api.models import BasketProduct, Customer
 from api.serializers import BasketProductSerializer
 from django.utils.decorators import method_decorator
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, ListModelMixin
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 
 class BasketView(ListModelMixin, CreateModelMixin, DestroyModelMixin, GenericAPIView):
-    permission_classes = [IsAuthenticated]
     serializer_class = BasketProductSerializer
 
     def get_queryset(self):
@@ -18,7 +16,7 @@ class BasketView(ListModelMixin, CreateModelMixin, DestroyModelMixin, GenericAPI
         return BasketProduct.objects.filter(customer=customer)
 
     def get_object(self):
-        productId = self.request.GET.get('productId')
+        productId = self.request.data.get('productId')
         customer = Customer.objects.get(user=self.request.user)
         return BasketProduct.objects.filter(customer=customer, product__id=productId).first()
 
@@ -27,19 +25,18 @@ class BasketView(ListModelMixin, CreateModelMixin, DestroyModelMixin, GenericAPI
         return self.list(request, *args, **kwargs)
 
     @method_decorator(onlyCustomer)
-    def put(self, request, *args, **kwargs):
+    def put(self, request, *args, customer, **kwargs):
         productId = request.data.get('productId')
         if self.get_queryset().filter(product__id=productId).exists():
             return Response({'error': 'Товар уже в корзине'}, status=400)
         return self.create(request, *args, **kwargs)
 
     @method_decorator(onlyCustomer)
-    def delete(self, request, *args, **kwargs):
+    def delete(self, request, *args, customer, **kwargs):
         return self.destroy(request, *args, **kwargs)
 
 
 @api_view(['DELETE'])
-@permission_classes([IsAuthenticated])
 @onlyCustomer
 def clearBasket(request, customer):
     try:
@@ -52,7 +49,6 @@ def clearBasket(request, customer):
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
 @onlyCustomer
 def basketSetCount(request, customer):
     try:

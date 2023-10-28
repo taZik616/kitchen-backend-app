@@ -12,6 +12,9 @@ django-floppyforms==1.9.0
 requests==2.31.0
 
 djangorestframework==3.14.0
+channels==4.0.0
+daphne==4.0.0
+channels-redis==4.1.0
 
 psycopg==3.1.12
 psycopg[binary]

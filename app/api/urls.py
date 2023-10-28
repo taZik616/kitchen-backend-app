@@ -5,11 +5,8 @@ urlpatterns = [
     path('categories',
          v1.CategoriesView.as_view()),
     path('change-password', v1.changePasswordView),
-    # если я назову не retrieveToken а login то у меня не будет функция работать из-за конфликта имен
     path('login', v1.loginView),
     path('login-confirm', v1.loginConfirmView),
-    # path('products', v1.ProductListView.as_view()),
-    # path('products/<str:id>', v1.ProductDetailView.as_view()),
     path('personal-info', v1.CustomerPersonalInfoView.as_view()),
     path('basket', v1.BasketView.as_view()),
     path('basket-reset', v1.clearBasket),
@@ -22,7 +19,9 @@ urlpatterns = [
     path('registry-resend-code', v1.registryResendCodeView),
     path('check-token', v1.checkTokenView),
     path('cities', v1.CityListView.as_view()),
-    path('products', v1.ProductListView.as_view())
+    path('products', v1.ProductListView.as_view()),
+    path('make-support-request', v1.makeSupportRequestView),
+    path('my-bonuses', v1.myBonusesView),
 ]
 
 well_known = [

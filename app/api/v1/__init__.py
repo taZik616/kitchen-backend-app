@@ -9,7 +9,9 @@ from .check_token import checkTokenView
 from .cities import CityListView
 from .helpful_info import HelpfulInfoDetailView, HelpfulInfoListView
 from .login import loginConfirmView, loginView
+from .my_bonuses import myBonusesView
 from .personal_info import CustomerPersonalInfoView
 from .product import ProductListView
 from .registry import registryConfirmView, registryResendCodeView, registrySendCodeView
 from .setting import SettingView
+from .support_request import makeSupportRequestView

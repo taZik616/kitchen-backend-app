@@ -10,6 +10,7 @@ class Customer(models.Model):
     isPhoneNumberVerified = models.BooleanField(
         default=False, blank=True, verbose_name="Подтвержденный номер")
     name = models.CharField('Имя', max_length=150)
+    bonuses = models.IntegerField('Бонусы', default=0)
 
     city = models.ForeignKey(
         'api.City', models.SET_NULL, null=True, verbose_name='Город')

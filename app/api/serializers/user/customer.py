@@ -31,7 +31,7 @@ class BasketProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BasketProduct
-        fields = ['product', 'productId', 'quantity']
+        fields = ['id', 'product', 'productId', 'quantity']
 
     def create(self, validated_data):
         productId = validated_data.pop('productId')

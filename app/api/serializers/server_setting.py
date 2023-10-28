@@ -5,13 +5,13 @@ from rest_framework import serializers
 class HelpfulInfoListSerializer(serializers.ModelSerializer):
     class Meta:
         model = HelpfulInfo
-        fields = ['key', 'title']
+        fields = ['key', 'title', 'icon']
 
 
 class HelpfulInfoDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = HelpfulInfo
-        fields = ['key', 'title', 'markdownContent']
+        fields = ['key', 'title', 'icon', 'markdownContent']
 
 
 class ServerSettingSerializer(serializers.ModelSerializer):

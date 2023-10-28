@@ -6,6 +6,7 @@ from .city import CityAdmin
 from .log_entry import LogEntryAdmin
 from .product import ProductAdmin
 from .server_setting import ServerSettingAdmin
+from .support_request import SupportRequest
 from .user import *
 
 admin.site.site_title = "Сайт администрирования"
@@ -21,6 +22,7 @@ ADMIN_ORDERING = [
         # Пользователи
         'BaseUser',
         'Customer',
+        'SupportRequest',
         # # Покупки
         # 'BuyBalance',
         # 'BuyBalanceByCard',

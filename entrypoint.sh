@@ -10,4 +10,5 @@ echo """
 import settings.on_start_app
 """ | python manage.py shell
 
+# daphne -b 0.0.0.0 -p 8000 settings.asgi:application
 python manage.py runserver 0.0.0.0:8000

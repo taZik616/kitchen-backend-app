@@ -10,10 +10,12 @@ PROJECT_DIR = BASE_DIR.parent
 env = Env()
 env.read_env(BASE_DIR / '.env', recurse=False)
 
-ALLOWED_HOSTS = ['89.108.99.39', 'po-obedai.ru', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['89.108.99.39', 'po-obedai.ru',
+                 'localhost', '127.0.0.1', '0.0.0.0']
 CSRF_TRUSTED_ORIGINS = ['https://po-obedai.ru']
 
 INSTALLED_APPS = [
+    'daphne',  # В доках сказано в начало положить
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -131,4 +133,14 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+}
+
+ASGI_APPLICATION = "settings.asgi.application"
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("redis", 6379)],
+        },
+    },
 }

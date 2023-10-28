@@ -69,6 +69,11 @@ services:
       - /var/lib/letsencrypt:/var/lib/letsencrypt
     depends_on:
       - app
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    ports:
+      - 3000:3000
 
 volumes:
   postgres-data:

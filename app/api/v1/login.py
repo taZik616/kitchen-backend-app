@@ -30,6 +30,8 @@ def loginView(request):
         customer = Customer.objects.filter(user__username=username).first()
         if not customer:
             return Response({'error': 'Пользователь с таким номером не найден'}, status=400)
+        if not customer.user.is_active:
+            return Response({'error': 'Пользователь был удален'}, status=400)
 
         # Code send
         codeSendRes = sendCodeToPhone(username)
