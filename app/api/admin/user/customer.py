@@ -17,7 +17,7 @@ class CustomerAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('user', 'city', 'isPhoneNumberVerified', 'bonuses')}),
         ('Персональная информация', {
-         "fields": ['name']}),
+         "fields": ['name', 'awaitingDeletion', 'deletionStartDate']}),
     )
     list_display_links = ['id', 'user']
     readonly_fields = ['id']

@@ -22,6 +22,7 @@ urlpatterns = [
     path('products', v1.ProductListView.as_view()),
     path('make-support-request', v1.makeSupportRequestView),
     path('my-bonuses', v1.myBonusesView),
+    path('cancel-deletion', v1.cancelDeletionView),
 ]
 
 well_known = [

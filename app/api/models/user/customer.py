@@ -11,6 +11,10 @@ class Customer(models.Model):
         default=False, blank=True, verbose_name="Подтвержденный номер")
     name = models.CharField('Имя', max_length=150)
     bonuses = models.IntegerField('Бонусы', default=0)
+    awaitingDeletion = models.BooleanField('Ожидает удаления', default=False)
+    deletionStartDate = models.DateTimeField(
+        'Дата старта удаления', blank=True, null=True, default=None,
+        help_text='Чтобы аккаунт удалился нужно 30 дней')
 
     city = models.ForeignKey(
         'api.City', models.SET_NULL, null=True, verbose_name='Город')

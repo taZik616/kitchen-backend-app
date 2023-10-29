@@ -19,7 +19,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ['id', 'name', 'user', 'city']
+        fields = ['id', 'name', 'user', 'city', 'awaitingDeletion']
 
 
 class BasketProductSerializer(serializers.ModelSerializer):
