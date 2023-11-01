@@ -17,4 +17,4 @@ class HelpfulInfoDetailSerializer(serializers.ModelSerializer):
 class ServerSettingSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServerSetting
-        fields = ['defaultUserCashbackPercent']
+        fields = ['defaultUserCashbackPercent', 'minOrderCost']

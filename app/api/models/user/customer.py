@@ -1,5 +1,3 @@
-import random
-
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -25,6 +23,30 @@ class Customer(models.Model):
 
     def __str__(self):
         return f"{self.user.username}, {self.name}"
+
+
+class CustomerAddress(models.Model):
+    city = models.ForeignKey(
+        'api.City', models.SET_NULL, null=True, verbose_name='Город')
+    customer = models.ForeignKey(
+        'api.Customer', on_delete=models.CASCADE, verbose_name='Пользователь')
+
+    streetAndHouse = models.CharField('Улица, дом', max_length=300, default='')
+    entrance = models.CharField('Подъезд', max_length=10, default='')
+    floor = models.CharField('Этаж', max_length=10, default='')
+    flat = models.CharField('Квартира', max_length=10, default='')
+
+    comment = models.TextField(
+        'Комментарий', null=True, blank=True, max_length=500)
+
+    coords = models.JSONField('Координаты')
+
+    class Meta:
+        verbose_name = 'Адрес доставки'
+        verbose_name_plural = 'Адреса доставки'
+
+    def __str__(self):
+        return f"{self.pk}, {self.customer.user.username}, {self.city.name} - {self.streetAndHouse}, кв. {self.flat}"
 
 
 class BasketProduct(models.Model):

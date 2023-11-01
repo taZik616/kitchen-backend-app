@@ -1,14 +1,21 @@
 from django.db import models
-from settings.settings import SMS_RU_API_KEY
+from settings.settings import MAP_GEO_CODER_API_KEY, MAP_SUGGEST_API_KEY, SMS_RU_API_KEY
 
 
 class ServerSetting(models.Model):
     sms_ru_api_key = models.CharField(default=SMS_RU_API_KEY, max_length=125)
+    map_suggest_api_key = models.CharField(
+        default=MAP_SUGGEST_API_KEY, verbose_name='Ключ сайджеста(подсказок) яндекс карт')
+    map_geo_coder_api_key = models.CharField(
+        default=MAP_GEO_CODER_API_KEY, verbose_name='Ключ геокодера яндекс карт')
 
     defaultUserCashbackPercent = models.DecimalField(
         'Процент который начисляется баллами с каждой покупки (%)',
         default=1, decimal_places=2, max_digits=5,
         help_text='Бонусы зачисляются только натуральными числами')
+
+    minOrderCost = models.PositiveIntegerField(
+        'Минимальная стоимость заказа', default=200)
 
     isUsed = models.BooleanField(
         default=True, verbose_name='Используется клиент-приложениями')

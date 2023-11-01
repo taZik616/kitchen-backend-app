@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 
-@ratelimit(key='ip', rate='10/min', block=False)
+@ratelimit(key='ip', rate='10/min')
 @api_view(['POST'])
 def checkTokenView(request):
     token = request.data.get('token')

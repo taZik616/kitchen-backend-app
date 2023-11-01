@@ -23,6 +23,10 @@ urlpatterns = [
     path('make-support-request', v1.makeSupportRequestView),
     path('my-bonuses', v1.myBonusesView),
     path('cancel-deletion', v1.cancelDeletionView),
+    path('address-geo-suggest', v1.addressGeoSuggestView),
+    path('add-address', v1.addAddressView),
+    path('change-address', v1.changeAddressView),
+    path('address-by-coords', v1.addressByCoordsView),
 ]
 
 well_known = [

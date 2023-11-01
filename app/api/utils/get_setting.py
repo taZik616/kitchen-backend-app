@@ -3,9 +3,6 @@ from api.models import ServerSetting
 
 
 def getSetting():
-    '''
-    Словарь с `['secretKey']` `['shopId']`
-    '''
     setting = ServerSetting.objects.filter(isUsed=True).first()
     if setting:
         return setting

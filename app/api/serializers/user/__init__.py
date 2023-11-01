@@ -1,1 +1,5 @@
-from .customer import BasketProductSerializer, CustomerSerializer
+from .customer import (
+    BasketProductSerializer,
+    CustomerAddressCreateSerializer,
+    CustomerSerializer,
+)

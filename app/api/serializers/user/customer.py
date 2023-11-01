@@ -1,4 +1,4 @@
-from api.models import BasketProduct, Customer, Product
+from api.models import BasketProduct, Customer, CustomerAddress, Product
 from api.serializers.city import CitySerializer
 from api.serializers.product import ProductSerializer
 from django.contrib.auth import get_user_model
@@ -13,13 +13,32 @@ class BaseUserCustomerSerializer(serializers.ModelSerializer):
         fields = ['id', 'username']
 
 
+class CustomerAddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomerAddress
+        exclude = ['customer', 'city']
+
+
+class CustomerAddressCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomerAddress
+        fields = '__all__'
+
+
 class CustomerSerializer(serializers.ModelSerializer):
     user = BaseUserCustomerSerializer()
     city = CitySerializer()
+    addresses = CustomerAddressSerializer(many=True)
+
+    def to_representation(self, instance):
+        instance.addresses = instance.customeraddress_set.all()
+
+        return super().to_representation(instance)
 
     class Meta:
         model = Customer
-        fields = ['id', 'name', 'user', 'city', 'awaitingDeletion']
+        fields = [
+            'id', 'name', 'user', 'city', 'awaitingDeletion', 'addresses']
 
 
 class BasketProductSerializer(serializers.ModelSerializer):

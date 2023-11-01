@@ -1,3 +1,5 @@
+from .add_address import addAddressView, changeAddressView
+from .address_geo_suggest import addressByCoordsView, addressGeoSuggestView
 from .app_links_association import (
     AndroidAppSiteAssociationView,
     AppleAppSiteAssociationView,
