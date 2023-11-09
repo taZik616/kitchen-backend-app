@@ -39,7 +39,7 @@ class ProductSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         customer = Customer.objects.get(user=request.user)
         instance.info = ProductInfoInCity.objects.filter(
-            pk=instance.pk, city=customer.city).first()
+            product__pk=instance.pk, city=customer.city).first()
 
         return super().to_representation(instance)
 

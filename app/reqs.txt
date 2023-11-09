@@ -27,6 +27,7 @@ phonenumbers==8.13.22
 django-phonenumber-field[phonenumberslite]==7.2.0
 pytils==0.4.1
 celery==5.3.4
+yookassa==2.4.0
 var-dump==1.2
 
 autopep8==2.0.2

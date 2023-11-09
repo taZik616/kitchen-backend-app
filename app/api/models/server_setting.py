@@ -17,6 +17,12 @@ class ServerSetting(models.Model):
     minOrderCost = models.PositiveIntegerField(
         'Минимальная стоимость заказа', default=200)
 
+    test_yookassa = models.JSONField(
+        'Юкасса эквайринг(тестовый)', null=True, default=None)
+    yookassa = models.JSONField('Юкасса эквайринг', null=True, default=None)
+    useTest = models.BooleanField(
+        'Использовать тестовый эквайринг', default=True)
+
     isUsed = models.BooleanField(
         default=True, verbose_name='Используется клиент-приложениями')
 

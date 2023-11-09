@@ -14,9 +14,9 @@ def addAddressView(request, customer):
         'customer': customer.pk,
         'city': customer.city.pk,
         'streetAndHouse': request.data.get('streetAndHouse'),
-        'entrance': request.data.get('entrance'),
-        'floor': request.data.get('floor'),
-        'flat': request.data.get('flat'),
+        'entrance': request.data.get('entrance', ''),
+        'floor': request.data.get('floor', ''),
+        'flat': request.data.get('flat', ''),
         'comment': request.data.get('comment', ''),
         'coords': request.data.get('coords')
     }
@@ -48,9 +48,9 @@ def changeAddressView(request, customer):
             'customer': customer.pk,
             'city': customer.city.pk,
             'streetAndHouse': request.data.get('streetAndHouse'),
-            'entrance': request.data.get('entrance'),
-            'floor': request.data.get('floor'),
-            'flat': request.data.get('flat'),
+            'entrance': request.data.get('entrance', ''),
+            'floor': request.data.get('floor', ''),
+            'flat': request.data.get('flat', ''),
             'comment': request.data.get('comment', ''),
             'coords': request.data.get('coords')
         }
@@ -65,10 +65,49 @@ def changeAddressView(request, customer):
 
             customerAddress.save()
 
-            return Response({'success': True, 'data': serializer.data})
+            return Response({'success': True, 'data': {**serializer.data, 'id': customerAddress.pk}})
         else:
             print(serializer.error_messages)
             print(serializer.errors)
             return Response({'error': 'Некорректные данные'}, status=400)
 
     return Response({'error': 'Не удалось найти адрес'}, status=400)
+
+
+@ratelimit(key='user_or_ip', rate='150/hour')
+@api_view(['DELETE'])
+@onlyCustomer
+def removeAddressView(request, customer):
+    id = request.data.get('id')
+
+    customerAddress = CustomerAddress.objects.filter(
+        customer=customer,
+        city=customer.city,
+        id=id,
+    ).first()
+
+    customerAddress.delete()
+
+    return Response({'success': 'Адрес был успешно удален'})
+
+
+@ratelimit(key='user_or_ip', rate='150/hour')
+@api_view(['POST'])
+@onlyCustomer
+def setDefaultAddressView(request, customer):
+    id = request.data.get('id')
+    if id == 0:
+        customer.defaultAddress = None
+        customer.save()
+        return Response({'success': 'Адрес по умолчанию убран'})
+
+    customerAddress = CustomerAddress.objects.filter(
+        customer=customer,
+        city=customer.city,
+        id=id,
+    ).first()
+
+    customer.defaultAddress = customerAddress
+    customer.save()
+
+    return Response({'success': 'Этот адрес теперь по умолчанию'})

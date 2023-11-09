@@ -4,6 +4,7 @@ from django.contrib.admin.sites import site
 from .category import CategoryAdmin
 from .city import CityAdmin
 from .log_entry import LogEntryAdmin
+from .order import OrderAdmin
 from .product import ProductAdmin
 from .server_setting import ServerSettingAdmin
 from .support_request import SupportRequestAdmin
@@ -27,7 +28,7 @@ ADMIN_ORDERING = [
         # 'BuyBalance',
         # 'BuyBalanceByCard',
         # 'Commission',
-        # 'OnlineOrder',
+        'Order',
         # Локации
         'City',
         # Некоторые дополнительные настройки

@@ -106,6 +106,12 @@ AUTH_PASSWORD_VALIDATORS = [
 SMS_RU_API_KEY = env.str('SMS_RU_API_KEY')
 MAP_SUGGEST_API_KEY = env.str('MAP_SUGGEST_API_KEY')
 MAP_GEO_CODER_API_KEY = env.str('MAP_GEO_CODER_API_KEY')
+with env.prefixed('YOOKASSA_'):
+    YOOKASSA_SHOP_ID = env.int('SHOP_ID')
+    YOOKASSA_SECRET_KEY = env.str('SECRET_KEY')
+with env.prefixed('YOOKASSA_TEST_'):
+    YOOKASSA_TEST_SHOP_ID = env.int('SHOP_ID')
+    YOOKASSA_TEST_SECRET_KEY = env.str('SECRET_KEY')
 
 # Internationalization
 LANGUAGE_CODE = 'ru-ru'

@@ -1,0 +1,1 @@
+from .yookassa import yookassaWebhookHandler

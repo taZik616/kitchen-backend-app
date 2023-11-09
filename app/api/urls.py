@@ -8,6 +8,7 @@ urlpatterns = [
     path('login', v1.loginView),
     path('login-confirm', v1.loginConfirmView),
     path('personal-info', v1.CustomerPersonalInfoView.as_view()),
+    path('change-city', v1.changeCityView),
     path('basket', v1.BasketView.as_view()),
     path('basket-reset', v1.clearBasket),
     path('basket-update-count', v1.basketSetCount),
@@ -26,7 +27,12 @@ urlpatterns = [
     path('address-geo-suggest', v1.addressGeoSuggestView),
     path('add-address', v1.addAddressView),
     path('change-address', v1.changeAddressView),
+    path('remove-address', v1.removeAddressView),
+    path('set-default-address', v1.setDefaultAddressView),
     path('address-by-coords', v1.addressByCoordsView),
+    path('make-order', v1.makeOrderView),
+    path('orders', v1.OrderListView.as_view()),
+    path('orders/<str:id>', v1.OrderDetailView.as_view()),
 ]
 
 well_known = [

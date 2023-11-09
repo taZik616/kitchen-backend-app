@@ -1,5 +1,5 @@
 from api.decorators import onlyCustomer
-from api.models import Customer
+from api.models import City, Customer
 from api.serializers import CustomerSerializer
 from celery import shared_task
 from django.utils import timezone
@@ -56,3 +56,19 @@ def cancelDeletionView(request, customer):
     customer.save()
 
     return Response(status=200)
+
+
+@api_view(['POST'])
+@onlyCustomer
+def changeCityView(request, customer):
+    city = request.data.get('cityId')
+
+    if not city:
+        return Response({'error': 'Необходимо указать идентификатор города'}, status=400)
+    city = City.objects.filter(pk=city).first()
+    if not city:
+        return Response({'error': 'Такого города не существует'}, status=400)
+    customer.city = city
+    customer.save()
+
+    return Response({'success': 'Город изменен'})

@@ -38,16 +38,27 @@ class CustomerAddressInline(admin.StackedInline):
     form = CustomerAddressForm
 
 
+@admin.register(CustomerAddress)
+class CustomerAddressAdmin(admin.ModelAdmin):
+    model = CustomerAddress
+    search_fields = [
+        'customer__id', 'customer__user__username', 'streetAndHouse', 'city__name']
+
+
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
     actions = ['setPhoneVerified', 'setPhoneNotVerified']
     list_display = [
         'id', 'user', 'name', 'isPhoneNumberVerified', 'city']
     fieldsets = (
-        (None, {'fields': ('user', 'city', 'isPhoneNumberVerified', 'bonuses')}),
-        ('Персональная информация', {
-         "fields": ['name', 'awaitingDeletion', 'deletionStartDate']}),
+        [None, {
+            'fields': ['user', 'city', 'isPhoneNumberVerified', 'bonuses', 'defaultAddress']
+        }],
+        ['Персональная информация', {
+            'fields': ['name', 'awaitingDeletion', 'deletionStartDate']
+        }],
     )
+    autocomplete_fields = ['defaultAddress']
     list_display_links = ['id', 'user']
     readonly_fields = ['id']
     list_filter = ['city']
